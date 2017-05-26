@@ -5,6 +5,7 @@ import ViewSelector from './components/ViewSelector';
 import FloatingButton from './components/FloatingButton';
 import ContactModal from './components/ContactModal';
 import Dimmed from './components/Dimmed';
+import shortid from 'shortid';
 
 import oc from 'open-color';
 
@@ -39,7 +40,8 @@ class App extends Component {
         modal: {
             visible: false,
             mode: null // create 혹은 modify
-        }
+        },
+        contacts: []
     }
 
     // view 선택 메소드 정의
@@ -63,10 +65,40 @@ class App extends Component {
 
         // 이 아래엔 추후 구현될 함수들
 
-        change: null,
+        change: ({name, value}) => {
+            this.setState({
+                modal: {
+                    ...this.state.modal, 
+                    [name]: value // 인자로 전달받은 name 의 값을 value 로 설정
+                }
+            })
+        },
         
         action: {
-            create: null,
+            create: () => {
+                // 고유 ID 생성
+                const id = shortid.generate();
+
+                // 레퍼런스 생성
+                const { contacts, modal: { name, phone, color } } = this.state;
+
+                // 데이터 생성
+                const contact = {
+                    id,
+                    name,
+                    phone,
+                    color,
+                    favorite: false // 즐겨찾기의 기본값은 false
+                };
+
+                this.setState({
+                    // 기존 배열에있던것들을 집어넣고, contact 를 뒤에 추가한 새 배열로 설정
+                    contacts: [...contacts, contact]
+                });
+                
+                // 모달 닫기
+                this.modalHandler.hide();
+            },
             modify: null,
             remomve: null
         }
@@ -112,7 +144,11 @@ class App extends Component {
                 <Container visible={view==='list'}>
                     리스트
                 </Container>
-                <ContactModal {...modal} onHide={modalHandler.hide}/>
+                <ContactModal 
+                    {...modal} 
+                    onHide={modalHandler.hide} 
+                    onChange={modalHandler.change}
+                    onAction={modalHandler.action[modal.mode]}/>
                 <Dimmed visible={modal.visible}/>
                 <FloatingButton onClick={handleFloatingButtonClick}/>
             </div>
