@@ -13,12 +13,13 @@ class ContactList extends Component {
     }
 
     render() {
-        const { contacts } = this.props;
+        const { contacts, onOpenModify } = this.props;
         const contactList = contacts.map(
             contact => (
                 <ContactItem 
                     key={contact.id} 
                     contact={contact}
+                    onOpenModify={onOpenModify}
                 />
             )
         );
