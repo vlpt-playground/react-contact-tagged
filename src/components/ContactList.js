@@ -17,7 +17,7 @@ class ContactList extends Component {
     }
 
     render() {
-        const { contacts, onOpenModify, search } = this.props;
+        const { contacts, onOpenModify, onToggleFavorite, search } = this.props;
         const contactList = contacts.filter( // 키워드로 필터링
             c => c.name.indexOf(search) !== -1
         ).sort( // 가나다순으로 정렬
@@ -32,6 +32,7 @@ class ContactList extends Component {
                     key={contact.id} 
                     contact={contact}
                     onOpenModify={onOpenModify}
+                    onToggleFavorite={onToggleFavorite}
                 />
             )
         );

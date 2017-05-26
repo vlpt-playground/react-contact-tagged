@@ -185,7 +185,23 @@ class App extends Component {
     }
 
     itemHandler = {
-        toggleFavorite: null,
+        toggleFavorite: (id) => {
+            const { contacts } = this.state;
+            // id 로 index 조회
+            const index = contacts.findIndex(contact => contact.id === id);
+            const item = this.state.contacts[index];
+
+            this.setState({
+                contacts: [
+                    ...contacts.slice(0, index),
+                    {
+                        ...item,
+                        favorite: !item.favorite // 기존의 값을 반대로 설정
+                    },
+                    ...contacts.slice(index + 1, contacts.length)
+                ]
+            });
+        },
         openModify: (id) => {
             const { contacts } = this.state;
             // id 로 index 조회
@@ -257,6 +273,7 @@ class App extends Component {
                     <ContactList 
                         contacts={contacts}
                         onOpenModify={itemHandler.openModify}
+                        onToggleFavorite={itemHandler.toggleFavorite}
                         search={search}
                     />
                 </Container>
