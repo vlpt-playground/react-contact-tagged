@@ -35,5 +35,21 @@ export const transitions = {
             opacity: 0;
             transform: translateY(-100vh);
         }
+    `,
+    stretchOut: keyframes`
+        0% {
+            transform: scale(0,0);
+        }
+        100% {
+            transform: scale(1,1);
+        }
+    `,
+    shrinkIn: keyframes`
+        0% {
+            transform: scale(1, 1);
+        }
+        100% {
+            transform: scale(0,0);
+        }
     `
 }
