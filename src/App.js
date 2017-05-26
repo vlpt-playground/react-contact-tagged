@@ -8,6 +8,7 @@ import Dimmed from './components/Dimmed';
 import shortid from 'shortid';
 import ContactList from './components/ContactList';
 import Input from './components/Input';
+import FavoriteList from './components/FavoriteList';
 
 import oc from 'open-color';
 
@@ -262,7 +263,7 @@ class App extends Component {
                 <Header/>
                  <ViewSelector onSelect={handleSelectView} selected={view}/>
                 <Container visible={view==='favorite'}>
-                    즐겨찾기
+                    <FavoriteList contacts={contacts}/>
                 </Container>
                 <Container visible={view==='list'}>
                     <Input 
