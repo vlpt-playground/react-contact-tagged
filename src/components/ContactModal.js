@@ -121,7 +121,7 @@ class ContactModal extends Component {
                     <Button color="teal" onClick={onAction}>
 	                    { mode === 'create' ? '추가' : '수정'}
                     </Button>
-                    <Button color="gray">
+                    <Button color="gray" onClick={onHide}>
 	                    취소
                     </Button>
                 </ButtonsWrapper>
