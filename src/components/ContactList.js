@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ContactItem from './ContactItem';
 
+const Wrapper = styled.div`
+    margin-top: 1rem;
+`;
+
 class ContactList extends Component {
 
     static propTypes = {
@@ -13,8 +17,16 @@ class ContactList extends Component {
     }
 
     render() {
-        const { contacts, onOpenModify } = this.props;
-        const contactList = contacts.map(
+        const { contacts, onOpenModify, search } = this.props;
+        const contactList = contacts.filter( // 키워드로 필터링
+            c => c.name.indexOf(search) !== -1
+        ).sort( // 가나다순으로 정렬
+            (a,b) => {
+                if(a.name > b.name) return 1;
+                if (a.name < b.name) return -1;
+                return 0;
+            }
+        ).map( // 컴포넌트로 매핑
             contact => (
                 <ContactItem 
                     key={contact.id} 
@@ -24,9 +36,9 @@ class ContactList extends Component {
             )
         );
         return (
-            <div>
+            <Wrapper>
                 {contactList}
-            </div>
+            </Wrapper>
         );
     }
 }

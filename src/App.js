@@ -7,6 +7,7 @@ import ContactModal from './components/ContactModal';
 import Dimmed from './components/Dimmed';
 import shortid from 'shortid';
 import ContactList from './components/ContactList';
+import Input from './components/Input';
 
 import oc from 'open-color';
 
@@ -78,7 +79,8 @@ class App extends Component {
                 "color": "#e64980",
                 "favorite": false
             }
-        ]
+        ],
+        search: ''
     }
 
     // view 선택 메소드 정의
@@ -218,17 +220,25 @@ class App extends Component {
         );
     }
 
+    handleSearchChange = (e) => {
+        this.setState({
+            search: e.target.value
+        });
+    }
+
     render() {
         const { 
             handleSelectView,
             handleFloatingButtonClick,
             modalHandler,
             itemHandler,
+            handleSearchChange
         } = this;
         const { 
             view,
             modal,
-            contacts
+            contacts,
+            search
         } = this.state;
 
         return (
@@ -239,9 +249,15 @@ class App extends Component {
                     즐겨찾기
                 </Container>
                 <Container visible={view==='list'}>
+                    <Input 
+                        onChange={handleSearchChange} 
+                        value={search} 
+                        placeholder="검색"
+                    />
                     <ContactList 
                         contacts={contacts}
                         onOpenModify={itemHandler.openModify}
+                        search={search}
                     />
                 </Container>
                 <ContactModal 
